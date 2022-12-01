@@ -1,0 +1,49 @@
+# Advent of Code 2022 - Day 1
+
+```elixir
+Mix.install([
+  {:kino, "~> 0.7.0"}
+])
+```
+
+## Input
+
+```elixir
+input = Kino.Input.textarea("Please paste in your input", trim: true)
+```
+
+## Common
+
+```elixir
+defmodule Elves do
+  def powers(elves) do
+    elves
+    |> String.split("\n\n")
+    |> Enum.map(&elf_to_power/1)
+  end
+
+  defp elf_to_power(elf) do
+    elf
+    |> String.split("\n")
+    |> Enum.reduce(0, fn power, total -> total + String.to_integer(power) end)
+  end
+end
+```
+
+## Part 1
+
+```elixir
+Kino.Input.read(input)
+|> Elves.powers()
+|> Enum.reduce(&max/2)
+```
+
+## Part 2
+
+```elixir
+Kino.Input.read(input)
+|> Elvesi.powers()
+|> Enum.sort(:desc)
+|> Enum.take(3)
+|> Enum.sum()
+```
