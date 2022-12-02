@@ -1,0 +1,86 @@
+# Advent of Code 2022 - Day 2
+
+```elixir
+Mix.install([
+  {:kino, "~> 0.7.0"}
+])
+```
+
+## Input
+
+```elixir
+input = Kino.Input.textarea("Please paste in your input", trim: true)
+```
+
+## Common
+
+```elixir
+defmodule Main do
+  def score_round([x, y]) do
+    case [x, y] do
+      # rock rock  
+      ["A", "X"] -> 4
+      # rock paper 
+      ["A", "Y"] -> 8
+      # rock scissors
+      ["A", "Z"] -> 3
+      # paper rock
+      ["B", "X"] -> 1
+      # paper paper
+      ["B", "Y"] -> 5
+      # paper scissors
+      ["B", "Z"] -> 9
+      # scissors rock
+      ["C", "X"] -> 7
+      # scissors paper
+      ["C", "Y"] -> 2
+      # scissors scissors
+      ["C", "Z"] -> 6
+    end
+  end
+
+  def determine_throw([x, y]) do
+    case [x, y] do
+      # rock lose  
+      ["A", "X"] -> ["A", "Z"]
+      # rock tie 
+      ["A", "Y"] -> ["A", "X"]
+      # rock win
+      ["A", "Z"] -> ["A", "Y"]
+      # paper lose
+      ["B", "X"] -> ["B", "X"]
+      # paper tie
+      ["B", "Y"] -> ["B", "Y"]
+      # paper win
+      ["B", "Z"] -> ["B", "Z"]
+      # scissors lose
+      ["C", "X"] -> ["C", "Y"]
+      # scissors tie
+      ["C", "Y"] -> ["C", "Z"]
+      # scissors win
+      ["C", "Z"] -> ["C", "X"]
+    end
+  end
+end
+```
+
+## Part 1
+
+```elixir
+Kino.Input.read(input)
+|> String.split("\n", trim: true)
+|> Enum.map(&String.split/1)
+|> Enum.map(&Main.score_round/1)
+|> Enum.sum()
+```
+
+## Part 2
+
+```elixir
+Kino.Input.read(input)
+|> String.split("\n", trim: true)
+|> Enum.map(&String.split/1)
+|> Enum.map(&Main.determine_throw/1)
+|> Enum.map(&Main.score_round/1)
+|> Enum.sum()
+```
